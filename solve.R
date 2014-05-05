@@ -2,7 +2,7 @@
 # Generates a matrix E[i,j] of conditional probabilities P[p'=j|p=i] where p is the i-th entry
 # and p' is the j-th entry in the grid.
 # Note: sum(E[i, ]) = 1 for all i
-generate.transitionmatrix <- function(grid,drift,sd) {
+generate.transitionmatrix <- function(grid,sd) {
   N <- length(grid)
   pmin <- grid[1]
   pmax <- grid[N]
@@ -46,7 +46,7 @@ generate.payoffs <- function(price,demand,cost,duration) {
 solve <- function(prob) {
   price <- seq(prob$price_min, prob$price_max, length.out=prob$grid_length)
   payoff <- generate.payoffs(price, prob$demand, prob$cost, prob$duration)
-  E <- generate.transitionmatrix(price,problem$drift,problem$sd)
+  E <- generate.transitionmatrix(price,problem$sd)
   V <- matrix(1,nrow=prob$warehouses,ncol=prob$grid_length)
   VP <- matrix(0,nrow=prob$warehouses,ncol=prob$grid_length)
   while (max(abs(V-VP))>prob$threshold) {
